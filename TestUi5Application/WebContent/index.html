@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+
+		<script src="https://sapui5.hana.ondemand.com/1.42.6/resources/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m,sap.ui.layout"
+				data-sap-ui-theme="sap_bluecrystal">
+		</script>
+		<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
+
+		<script>
+			sap.ui.getCore().attachInit( function () {
+				var onPress = function(oEvent) {
+					alert("Press " + oEvent.getSource().getId());
+				}
+
+				var oImage = new sap.m.Image("Image1");
+				oImage.setSrc("img/sapui5.jpg");
+				oImage.setDecorative(false);
+				oImage.setAlt("SAPUI5 Logo");
+				oImage.attachPress(onPress)
+				
+
+				var oImage2 = new sap.m.Image("Image2");
+				oImage2.setSrc("img/sapui5.jpg");
+				oImage2.setDecorative(false);
+				oImage2.setAlt("SAPUI5 Logo");
+				oImage2.attachPress(onPress);
+				
+				var gridLayout = new sap.ui.layout.Grid({
+					content: [oImage, oImage2]
+				});
+				
+				gridLayout.placeAt(content);
+			});
+				
+			
+	
+		</script>
+
+	</head>
+	<body class="sapUiBody sapUiResponsiveMargin" role="application">
+		<div id="content"></div>
+	</body>
+</html>
