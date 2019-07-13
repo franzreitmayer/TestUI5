@@ -1,48 +1,97 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv='Content-Type' content='text/html;charset=UTF-8' />
 
-		<script src="https://sapui5.hana.ondemand.com/1.42.6/resources/sap-ui-core.js"
-				id="sap-ui-bootstrap"
-				data-sap-ui-libs="sap.m,sap.ui.layout"
-				data-sap-ui-theme="sap_bluecrystal">
-		</script>
-		<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
-
-		<script>
-			sap.ui.getCore().attachInit( function () {
-				var onPress = function(oEvent) {
-					alert("Press " + oEvent.getSource().getId());
-				}
-
-				var oImage = new sap.m.Image("Image1");
-				oImage.setSrc("img/sapui5.jpg");
-				oImage.setDecorative(false);
-				oImage.setAlt("SAPUI5 Logo");
-				oImage.attachPress(onPress)
-				
-
-				var oImage2 = new sap.m.Image("Image2");
-				oImage2.setSrc("img/sapui5.jpg");
-				oImage2.setDecorative(false);
-				oImage2.setAlt("SAPUI5 Logo");
-				oImage2.attachPress(onPress);
-				
-				var gridLayout = new sap.ui.layout.Grid({
-					content: [oImage, oImage2]
-				});
-				
-				gridLayout.placeAt(content);
-			});
-				
-			
+<script
+	src="https://sapui5.hana.ondemand.com/1.42.6/resources/sap-ui-core.js"
+	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.ui.layout"
+	data-sap-ui-theme="sap_bluecrystal" data-sap-ui-compatVersion="edge">
 	
-		</script>
+</script>
+<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
 
-	</head>
-	<body class="sapUiBody sapUiResponsiveMargin" role="application">
-		<div id="content"></div>
-	</body>
+<script>
+	// applicationn data
+	var oData = {
+		"CountSuppliers" : "2",
+		"Suppliers" : [ {
+			"ID" : 0,
+			"Name" : "Exotic Liquids",
+			"Address" : {
+				"Street" : "NE 228th",
+				"City" : "Sammamish",
+				"State" : "WA",
+				"ZipCode" : "98074",
+				"Country" : "USA"
+			}
+		},
+		{
+			"ID": 1,
+			"Name": "Tokoy Traders",
+			"Address": {
+				"Street": "NE 40th",
+				"City": "Redmond",
+				"State": "WA",
+				"ZipCode": "98052",
+				"Country": "USA"
+			}
+		}]
+	};
+	
+	// create and set the model
+	var oModel = sap.ui.model.json.JSONModel();
+	oModel.setData(oData);
+	sap.ui.getCore().setModel(oModel);
+	
+	// columns will act as column headers
+	var aColumns = [
+		new sap.m.Column({header: new sap.m.Text({text: "ID"})}),
+		new sap.m.Column({header: new sap.m.Text({text: "Name"})})	
+	];
+	
+	// in the template the supplier informtion will be displayed
+	var oTemplate = new sap.m.ColumnListItem({
+		type: "Navigation",
+		cells: [
+			new sap.m.ObjectIdentifier({text: "{ID}"}),
+			new sap.m.ObjectIdentifier({text: "{Name}"})
+		]
+	});
+	
+	// display the number of suppliers at the header
+	var oTableHeader = new sap.m.Toolbar({
+		content: [
+			new sap.m.Title({
+				text: "Number of Suppliers: {/CountSuppliers}"
+			})
+		]
+	});
+	
+	// we create the table with the column header
+	var oTable = new sap.m.Table({
+		columns: aColumns,
+		headerToolbar: oTableHeader
+	});
+	
+	// bind the array 'Suppliers' of the JSONModel resp. the JSONData 'oData'
+	// to the table and bind the template also
+	oTable.bindItems("/Suppliers", oTemplate);
+	
+	var oPageMaster = new sap.m.Page("masterPage", {
+		title: "Supplier Overview",
+		content: [oTable]}
+	);
+	
+	var oApp = new sap.m.App("myApp");
+	
+	oApp.addPage(oPageMaster);
+	oApp.placeAt("content");
+</script>
+
+</head>
+<body class="sapUiBody sapUiResponsiveMargin" role="application">
+	<div id="content"></div>
+</body>
 </html>
