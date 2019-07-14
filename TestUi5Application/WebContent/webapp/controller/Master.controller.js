@@ -4,7 +4,7 @@ sap.ui.define([
 	"use strict";
 	return Controller.extend("sapui5.demo.mvcapp.controller.Master", {
 		onListPress: function(oEvent) {
-			var sPageId = "detailPage";
+			var sPageId = "appview--detailPage";
 			oApp.to(sPageId);
 			
 			var oPage = oApp.getPage(sPageId);
