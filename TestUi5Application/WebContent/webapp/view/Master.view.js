@@ -13,6 +13,7 @@ sap.ui.jsview("sapui5.demo.mvcapp.view.Master", {
 		// in the template the supplier informtion will be displayed
 		var oTemplate = new sap.m.ColumnListItem({
 			type: "Navigation",
+			press: [oController.onListPress, oController],
 			cells: [
 				new sap.m.ObjectIdentifier({text: "{ID}"}),
 				new sap.m.ObjectIdentifier({text: "{Name}"})
