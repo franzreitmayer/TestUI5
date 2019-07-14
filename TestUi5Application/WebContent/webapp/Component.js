@@ -2,8 +2,11 @@ sap.ui.define([ "sap/ui/core/UIComponent", "sap/ui/model/json/JSONModel" ],
 		function(UIComponent, JSONModel) {
 			"use strict";
 			return UIComponent.extend("sapui5.demo.mvcapp.Component", {
+				metadata: {
+					"rootView": "sapui5.demo.mvcapp.view.App"
+				},
 				createContent: function() {
-					UIComponent.prototype.createContent.apply(this, arguments);
+					var oRootView = UIComponent.prototype.createContent.apply(this, arguments);
 				
 					var oData = {
 							"CountSuppliers" : "2",
@@ -36,12 +39,12 @@ sap.ui.define([ "sap/ui/core/UIComponent", "sap/ui/model/json/JSONModel" ],
 					
 					this.setModel(oModel);
 					
-					var oRootView = sap.ui.view("appview", {
-						type: sap.ui.core.mvc.ViewType.XML,
-						viewName: "sapui5.demo.mvcapp.view.App"
-					});
-					
-					oApp = oRootView.byId("appview--app");
+//					var oRootView = sap.ui.view("appview", {
+//						type: sap.ui.core.mvc.ViewType.XML,
+//						viewName: "sapui5.demo.mvcapp.view.App"
+//					});
+//					
+					oApp = oRootView.byId("app");
 					
 					return oRootView; 
 				}
