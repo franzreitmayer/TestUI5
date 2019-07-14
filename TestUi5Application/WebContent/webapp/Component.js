@@ -3,39 +3,17 @@ sap.ui.define([ "sap/ui/core/UIComponent", "sap/ui/model/json/JSONModel" ],
 			"use strict";
 			return UIComponent.extend("sapui5.demo.mvcapp.Component", {
 				metadata: {
-					"rootView": "sapui5.demo.mvcapp.view.App"
+					"rootView": "sapui5.demo.mvcapp.view.App",
+					"config": {
+						"serviceUrl": "webapp/service/data.json"
+					}
 				},
 				createContent: function() {
 					var oRootView = UIComponent.prototype.createContent.apply(this, arguments);
 				
-					var oData = {
-							"CountSuppliers" : "2",
-							"Suppliers" : [ {
-								"ID" : 0,
-								"Name" : "Exotic Liquids",
-								"Address" : {
-									"Street" : "NE 228th",
-									"City" : "Sammamish",
-									"State" : "WA",
-									"ZipCode" : "98074",
-									"Country" : "USA"
-								}
-							},
-							{
-								"ID": 1,
-								"Name": "Tokoy Traders",
-								"Address": {
-									"Street": "NE 40th",
-									"City": "Redmond",
-									"State": "WA",
-									"ZipCode": "98052",
-									"Country": "USA"
-								}
-							}]
-						};
 					// create and set the model
-					var oModel = new JSONModel();
-					oModel.setData(oData);
+					var oModel = new JSONModel(this.getMetadata().getConfig().serviceUrl);
+					// oModel.setData(oData);
 					
 					this.setModel(oModel);
 					
