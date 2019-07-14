@@ -5,9 +5,10 @@
 <meta http-equiv='Content-Type' content='text/html;charset=UTF-8' />
 
 <script
-	src="https://sapui5.hana.ondemand.com/1.42.6/resources/sap-ui-core.js"
+	src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
 	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.ui.layout"
-	data-sap-ui-theme="sap_bluecrystal" data-sap-ui-compatVersion="edge">
+	data-sap-ui-theme="sap_bluecrystal" data-sap-ui-compatVersion="edge"
+	data-sap-ui-resourceroots='{"sapui5.demo.mvcapp": "./webapp"}'>
 	
 </script>
 <!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
@@ -41,52 +42,21 @@
 	};
 	
 	// create and set the model
-	var oModel = sap.ui.model.json.JSONModel();
+	var oModel = new sap.ui.model.json.JSONModel();
 	oModel.setData(oData);
 	sap.ui.getCore().setModel(oModel);
 	
-	// columns will act as column headers
-	var aColumns = [
-		new sap.m.Column({header: new sap.m.Text({text: "ID"})}),
-		new sap.m.Column({header: new sap.m.Text({text: "Name"})})	
-	];
-	
-	// in the template the supplier informtion will be displayed
-	var oTemplate = new sap.m.ColumnListItem({
-		type: "Navigation",
-		cells: [
-			new sap.m.ObjectIdentifier({text: "{ID}"}),
-			new sap.m.ObjectIdentifier({text: "{Name}"})
-		]
+	var oPageMasterView = sap.ui.view("masterPage", {
+		type: sap.ui.core.mvc.ViewType.JS,
+		viewName: "sapui5.demo.mvcapp.view.Master"
 	});
 	
-	// display the number of suppliers at the header
-	var oTableHeader = new sap.m.Toolbar({
-		content: [
-			new sap.m.Title({
-				text: "Number of Suppliers: {/CountSuppliers}"
-			})
-		]
+	
+	var oApp = new sap.m.App({
+		initalPage: "masterPage"
 	});
 	
-	// we create the table with the column header
-	var oTable = new sap.m.Table({
-		columns: aColumns,
-		headerToolbar: oTableHeader
-	});
-	
-	// bind the array 'Suppliers' of the JSONModel resp. the JSONData 'oData'
-	// to the table and bind the template also
-	oTable.bindItems("/Suppliers", oTemplate);
-	
-	var oPageMaster = new sap.m.Page("masterPage", {
-		title: "Supplier Overview",
-		content: [oTable]}
-	);
-	
-	var oApp = new sap.m.App("myApp");
-	
-	oApp.addPage(oPageMaster);
+	oApp.addPage(oPageMasterView);
 	oApp.placeAt("content");
 </script>
 
