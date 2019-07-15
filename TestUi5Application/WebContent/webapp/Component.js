@@ -23,7 +23,7 @@ sap.ui.define([ "sap/ui/core/UIComponent", "sap/ui/model/json/JSONModel" ],
 								"target": "master"
 							},
 							{
-								"pattern": "detail",
+								"pattern": "detail/{ID}",
 								"name": "detail",
 								"target": "detail"
 							}
