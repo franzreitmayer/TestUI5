@@ -6,7 +6,43 @@ sap.ui.define([ "sap/ui/core/UIComponent", "sap/ui/model/json/JSONModel" ],
 					"rootView": "sapui5.demo.mvcapp.view.App",
 					"config": {
 						"serviceUrl": "webapp/service/data.json"
+					},
+					"routing": {
+						"config": {
+							"routerClass": "sap.m.routing.Router",
+							"viewType": "XML",
+							"viewPath": "sapui5.demo.mvcapp.view",
+							"controlId": "app",
+							"controlAggregation": "pages",
+							"transition": "flip"
+						},
+						"routes": [
+							{
+								"pattern": "",
+								"name": "master",
+								"target": "master"
+							},
+							{
+								"pattern": "detail",
+								"name": "detail",
+								"target": "detail"
+							}
+						],
+						"targets": {
+							"master": {
+								"viewName": "Master",
+								"viewLevel": 1
+							},
+							"detail": {
+								"viewName": "Detail",
+								"viewLevel": 2
+							}
+						}
 					}
+				},
+				init: function() {
+					UIComponent.prototype.init.apply(this, arguments);
+					this.getRouter().initialize();
 				},
 				createContent: function() {
 					var oRootView = UIComponent.prototype.createContent.apply(this, arguments);
@@ -22,9 +58,8 @@ sap.ui.define([ "sap/ui/core/UIComponent", "sap/ui/model/json/JSONModel" ],
 //						viewName: "sapui5.demo.mvcapp.view.App"
 //					});
 //					
-					oApp = oRootView.byId("app");
 					
-					return oRootView; 
+				return oRootView; 
 				}
 			})
 		});
